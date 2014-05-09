@@ -1,0 +1,47 @@
+﻿@*her skal menuen opbygges dynamisk - der skal checkes hvilke menupunkter bruger (role) må se*@
+
+<li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("About", "About", "Home")</li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    <li>@Html.ActionLink("Blog", "Index", "Post")</li>
+    <li>@Html.ActionLink("Users", "Index", "Account")</li>
+
+
+ @*fejl: THE ROLE MANAGER FEATURE HAS NOT BEEN ENABLED
+@{
+        var menus = new[]
+    {
+    new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="All" },
+    new { LinkText="About", ActionName="About",ControllerName="Home",Roles="All" },
+    new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="All" },
+
+    new { LinkText="Blog", ActionName="Index",ControllerName="Post",Roles="Admin,CanEdit" },
+    new { LinkText="Admin", ActionName="Index",ControllerName="Account",Roles="Admin" }
+
+    };
+    }
+
+   
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in menus
+    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+    .Any(x => roles.Contains(x) || x == "All")
+    select item;
+    foreach (var link in links)
+    {
+    @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+    }
+    else{
+    var links = from item in menus
+    where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+    .Any(x=>new String[]{"All","Anonymous"}.Contains(x))
+    select item;
+    foreach ( var link in links){
+    @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+    }
+    }
+   
+    }*@
