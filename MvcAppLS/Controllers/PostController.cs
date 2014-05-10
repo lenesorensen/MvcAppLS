@@ -17,20 +17,22 @@ namespace MvcAppLS.Controllers
 
 
         // GET: Post
-        [Authorize(Roles = "CanEdit")]
+        //[Authorize(Roles = "CanEdit")]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Posts.ToList());
         }
 
         // GET: Post
-        [AllowAnonymous]
-        public ActionResult ListReadOnly()
-        {
-            return View(db.Posts.ToList());
-        }
+        //[AllowAnonymous]
+        //public ActionResult ListReadOnly()
+        //{
+        //    return View(db.Posts.ToList());
+        //}
 
         // GET: Post/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -46,7 +48,7 @@ namespace MvcAppLS.Controllers
         }
 
         // GET: Post/Create
-       [Authorize(Roles = "CanEdit")]
+        [Authorize(Roles = "CanEdit")]
         public ActionResult Create()
         {
             return View();
@@ -71,7 +73,7 @@ namespace MvcAppLS.Controllers
         }
 
         // GET: Post/Edit/5
-       [Authorize(Roles = "CanEdit")]
+        [Authorize(Roles = "CanEdit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,7 +106,7 @@ namespace MvcAppLS.Controllers
         }
 
         // GET: Post/Delete/5
-      [Authorize(Roles = "CanEdit")]
+        [Authorize(Roles = "CanEdit")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

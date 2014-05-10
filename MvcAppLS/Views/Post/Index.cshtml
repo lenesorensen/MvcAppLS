@@ -8,13 +8,16 @@
 
 <h2>Posts</h2>
 
-@{var price = 40;}
-@if (price > 30)
+@if (User.Identity.IsAuthenticated)
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    if (User.IsInRole("CanEdit"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
 }
+
 <table class="table">
     <tr>
         <th>
@@ -32,6 +35,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -54,10 +58,18 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+                @Html.ActionLink("Details", "Details", new { id = item.PostId })
 
-                @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PostId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("CanEdit"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) 
+                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+                    }
+                }
 
             </td>
         </tr>
