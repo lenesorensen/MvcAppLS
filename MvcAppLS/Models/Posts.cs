@@ -16,6 +16,7 @@ namespace MvcAppLS.Models
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Posted Date")]
         public DateTime PostedDate { get; set; }
 
         public string Category { get; set; }
